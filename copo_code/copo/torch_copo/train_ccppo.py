@@ -4,6 +4,7 @@ from ray import tune
 
 from copo.torch_copo.algo_ccppo import CCPPOTrainer, get_ccppo_env
 from copo.torch_copo.utils.callbacks import MultiAgentDrivingCallbacks
+from copo.torch_copo.utils.env_wrappers import get_gym_compatible_env
 from copo.torch_copo.utils.train import train
 from copo.torch_copo.utils.utils import get_train_parser
 
@@ -16,12 +17,12 @@ if __name__ == "__main__":
         # We can grid-search the environmental parameters!
         env=tune.grid_search(
             [
-                get_ccppo_env(MultiAgentParkingLotEnv),
-                # get_ccppo_env(MultiAgentRoundaboutEnv),
-                # get_ccppo_env(MultiAgentBottleneckEnv),
-                # get_ccppo_env(MultiAgentMetaDrive),
-                # get_ccppo_env(MultiAgentTollgateEnv),
-                # get_ccppo_env(MultiAgentIntersectionEnv)
+                get_ccppo_env(get_gym_compatible_env(MultiAgentParkingLotEnv)),
+                # get_ccppo_env(get_gym_compatible_env(MultiAgentRoundaboutEnv)),
+                # get_ccppo_env(get_gym_compatible_env(MultiAgentBottleneckEnv)),
+                # get_ccppo_env(get_gym_compatible_env(MultiAgentMetaDrive)),
+                # get_ccppo_env(get_gym_compatible_env(MultiAgentTollgateEnv)),
+                # get_ccppo_env(get_gym_compatible_env(MultiAgentIntersectionEnv))
             ]
         ),
         # env_config=dict(

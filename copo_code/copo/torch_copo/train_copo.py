@@ -4,7 +4,7 @@ from ray import tune
 
 from copo.torch_copo.algo_copo import CoPOTrainer, USE_CENTRALIZED_CRITIC, USE_DISTRIBUTIONAL_LCF, COUNTERFACTUAL
 from copo.torch_copo.utils.callbacks import MultiAgentDrivingCallbacks
-from copo.torch_copo.utils.env_wrappers import get_lcf_env, get_rllib_compatible_env
+from copo.torch_copo.utils.env_wrappers import get_lcf_env, get_rllib_compatible_env, get_gym_compatible_env
 from copo.torch_copo.utils.train import train
 from copo.torch_copo.utils.utils import get_train_parser
 
@@ -21,12 +21,12 @@ if __name__ == "__main__":
         # We can grid-search the environmental parameters!
         env=tune.grid_search(
             [
-                # get_rllib_compatible_env(get_lcf_env(MultiAgentParkingLotEnv)),
-                # get_rllib_compatible_env(get_lcf_env(MultiAgentRoundaboutEnv)),
-                # get_rllib_compatible_env(get_lcf_env(MultiAgentTollgateEnv)),
-                # get_rllib_compatible_env(get_lcf_env(MultiAgentBottleneckEnv)),
-                get_rllib_compatible_env(get_lcf_env(MultiAgentIntersectionEnv)),
-                # get_rllib_compatible_env(get_lcf_env(MultiAgentMetaDrive)),
+                # get_rllib_compatible_env(get_lcf_env(get_gym_compatible_env(MultiAgentParkingLotEnv))),
+                # get_rllib_compatible_env(get_lcf_env(get_gym_compatible_env(MultiAgentRoundaboutEnv))),
+                # get_rllib_compatible_env(get_lcf_env(get_gym_compatible_env(MultiAgentTollgateEnv))),
+                # get_rllib_compatible_env(get_lcf_env(get_gym_compatible_env(MultiAgentBottleneckEnv))),
+                get_rllib_compatible_env(get_lcf_env(get_gym_compatible_env(MultiAgentIntersectionEnv))),
+                # get_rllib_compatible_env(get_lcf_env(get_gym_compatible_env(MultiAgentMetaDrive))),
             ]
         ),
         env_config=dict(
