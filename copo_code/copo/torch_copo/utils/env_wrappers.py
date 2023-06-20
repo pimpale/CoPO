@@ -1,12 +1,11 @@
 import copy
 from collections import defaultdict
 from math import cos, sin
-from typing import Any, Dict
 
 import numpy as np
 from gym.spaces import Box, Dict
 from metadrive.utils import get_np_random, clip
-from metadrive.envs.gym_wrapper import GymEnvWrapper
+from metadrive.envs.gym_wrapper import createGymWrapper
 from ray.rllib.env import MultiAgentEnv
 from ray.tune.registry import register_env
 
@@ -600,14 +599,7 @@ def get_rllib_compatible_env(env_class, return_class=False):
 
 
 def get_gym_compatible_env(env_class):
-    class GymCompatibleEnv(GymEnvWrapper):
-        def __init__(self, config):
-            super().__init__(config={
-                "inner_class": env_class,
-                "inner_config": config
-            })
-    
-    return GymCompatibleEnv
+    return createGymWrapper(env_class)
 
 if __name__ == '__main__':
     # Test if the distance map is correctly updated.
